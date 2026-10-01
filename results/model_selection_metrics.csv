@@ -1,0 +1,8 @@
+record_id,model_or_variant,common_input,precision,recall,dice,iou,trainable_parameters_million,selected,source_table
+M01,U-Net,Amp,0.963,0.947,0.955,0.914,7.762,false,"Supplementary Table S4, Section I"
+M02,ResU-Net,Amp,0.966,0.965,0.966,0.935,7.869,false,"Supplementary Table S4, Section I"
+M03,SegFormer,Amp,0.962,0.945,0.956,0.915,3.711,false,"Supplementary Table S4, Section I"
+M04,DeepLabV3+,Amp,0.959,0.947,0.953,0.911,22.431,false,"Supplementary Table S4, Section I"
+M05,Selected attention-based residual U-Net,Amp,0.971,0.968,0.97,0.944,8.342,true,"Supplementary Table S4, Section I"
+M06,Selected model without deep supervision,Amp,0.969,0.964,0.967,0.935,8.211,false,"Supplementary Table S4, Section I"
+M07,Selected model without deep supervision and attention gates,Amp,0.968,0.964,0.966,0.936,8.2,false,"Supplementary Table S4, Section I"
