@@ -1,0 +1,34 @@
+# Seven independent test profiles
+
+The seven NPZ files listed in `test_lines.csv` are processed, model-ready test
+profiles. They are not original SEG-Y files. Each archive contains co-registered
+`raw`, `env`, `rms`, and binary `mask` arrays. All required arrays are finite,
+have matching `(time_samples, traces)` shapes, and use a 1 ms sample interval.
+
+The archives additionally contain `ifreq`, `swe`, `coh`, `var`, and `aveen`
+attributes plus a `meta_attr` record describing attribute generation. The paper
+model uses only `raw`, `env`, and `rms`; `mask` is used for evaluation.
+
+The local source copies on the Desktop and the E: research directory were
+verified as byte-identical on 2026-09-30. Their hashes are recorded in
+`CHECKSUMS.sha256`.
+
+## Distribution
+
+The seven full archives total approximately 1.85 GiB and are intentionally not
+stored in ordinary Git history. During submission and peer review they must be
+attached to the public `v1.0-submission` GitHub Release. After acceptance, the
+accepted release will additionally be archived in a DOI-bearing repository.
+If redistribution of derived cruise data is not permitted,
+`DATA_AVAILABILITY.md` must state the restriction, data owner, and access route.
+
+A reduced public package containing only `raw`, `env`, `rms`, and `mask` would
+be approximately 692 MiB, 63.5% smaller than the full attribute archives. Any
+repacked files must receive new SHA-256 values and a new manifest version.
+
+## Reproduction status
+
+The input data and reference masks are complete. Final predictions and Table 4
+must still be regenerated with the selected publication checkpoint and one
+frozen inference configuration. Existing February-March predictions predate the
+final 140-epoch checkpoints and must not be mixed with the final release.

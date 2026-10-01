@@ -1,0 +1,40 @@
+input_keys: [raw, env, rms]
+patch: 256
+stride: 128
+threshold: 0.5
+model:
+  base: 32
+  norm: gn
+  attention: true
+  deep_supervision: true
+  aux_heads: true
+  auto_architecture: true
+normalization:
+  mode: raw
+  raw_valid_percentile: 10.0
+postprocessing:
+  minimum_area_pixels: 160
+  minimum_trace_span: 70
+  minimum_time_span: 6
+  close: true
+  close_y: 9
+  close_x: 3
+  fill_holes: false
+invalid_data_suppression:
+  enabled: true
+  local_window: 31
+  standard_deviation_epsilon: 0.02
+geological_time_window:
+  enabled: true
+  lower_probability_threshold: 0.15
+  close_y: 3
+  close_x: 7
+  minimum_trace_span: 80
+  maximum_thickness_samples: 160
+  base_half_window: 30
+  half_window_scale: 0.6
+  smoothing_window: 51
+  score_mode: span_qprob
+  score_quantile: 75.0
+auxiliary_heads:
+  sdf_tau: 0.12

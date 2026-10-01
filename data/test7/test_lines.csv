@@ -1,0 +1,8 @@
+line_id,filename,height,width,size_bytes,dt_ms,mask_positive_pixels,mask_positive_percent,required_keys,sha256,publish_status
+HH06-10,HH06-10_reproc_Jonas.npz,2000,2429,114421224,1.0,56626,1.165624,raw;env;rms;mask,62d131abcf2fde8d01db620e40a72d03732acf101ad6c8c94a986ba3b286c15a,pending_data_archive
+HH06-14,HH06-14_reproc_Jonas.npz,2700,2946,201953190,1.0,28111,0.353411,raw;env;rms;mask,4eb59c4b3eb9593603dd7b30daaf36ae8c9aead780e622a605ee0926536289da,pending_data_archive
+HH06-15,HH06-15_reproc_Jonas.npz,2700,3021,210118241,1.0,21567,0.264408,raw;env;rms;mask,928a85cfb42f3deb07768ca792926e44f911f69f74a225c10bdc10d8fde6de11,pending_data_archive
+HH06-17,HH06-17_reproc_Jonas.npz,1900,3491,168369552,1.0,18222,0.274721,raw;env;rms;mask,7bc851d3440976d70f83e8eb903fc901aa3d841343b04af87459e2da8aad074d,pending_data_archive
+HH06-22,HH06-22_reproc_Jonas.npz,1800,2227,100049941,1.0,56033,1.397820,raw;env;rms;mask,ae05ddae08bbe4affac9a01b0b3281a551a2fec0426c8aca9db9ac2de988c723,pending_data_archive
+MSM135-P1004,MSM135_P1004_Reproc_MH.npz,3986,5630,590731519,1.0,320548,1.428392,raw;env;rms;mask,3f30f4f872af9def7a0b5b7114664c8862e60a51acaba53a64678c472c6be719,pending_data_archive
+MSM135-P1018,MSM135_P1018_Reproc_MH.npz,3986,5879,600612064,1.0,339047,1.446835,raw;env;rms;mask,7c0c54a9e681e944175de2d118ef4572b11999f2803023c5c8d287fa8cd6009b,pending_data_archive

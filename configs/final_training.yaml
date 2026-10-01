@@ -1,0 +1,66 @@
+experiment:
+  name: archaeos_tuff_final
+  seed: 42
+  outdir: outputs/archaeos_tuff_final
+
+data:
+  patch_root: data/patches
+  train_list: data/splits/train.txt
+  val_list: data/splits/val.txt
+  test_list: data/splits/test.txt
+  input_keys: [raw, env, rms]
+  batch: 64
+  num_workers: 8
+  pin_memory: true
+
+model:
+  base: 32
+  norm: gn
+  use_attention: true
+  deep_supervision: true
+  aux_heads: true
+  ds_weights: [0.05, 0.1, 0.2, 1.0]
+  dropout_p: 0.3
+
+train:
+  epochs: 140
+  lr: 0.0001
+  weight_decay: 0.0001
+  amp: true
+  use_scheduler: true
+  grad_clip_norm: 5.0
+  resume: ""
+
+loss:
+  type: bce_dice
+  pos_weight: 1.2
+  bce_w: 0.7
+  dice_w: 0.3
+  w_seg: 1.0
+  w_edge: 0.1
+  w_sdf: 0.7
+  sdf_delta: 0.2
+  boundary_radius: 1
+  sdf_clip: 20.0
+  sdf_band: 0.25
+  sdf_on_empty: false
+
+metrics:
+  threshold: 0.5
+
+sampler:
+  balanced_batch: false
+  use_sampler: true
+  pos_frac: 0.3
+  pos_thr: 0.5
+  min_pos_px: 8
+  mask_keys: [mask, gt, label, y, target]
+  sampler_mode: lineposneg
+  cap_per_line: 300
+  posflags_cache: ""
+
+debug:
+  debug_steps: 0
+  val_debug: true
+  val_debug_every: 100
+  train_eval_steps: 200
