@@ -3,34 +3,27 @@
 This directory records prediction products for six application profiles used
 to evaluate regional applicability of the Archaeos Tuff segmentation workflow.
 
-## Legacy predictions
+## Final publication predictions
 
-The NPZ files under `legacy_predictions/` were copied from the original local
-results folder on 2026-09-30. They were generated in March-April 2026, before
-the final 140-epoch checkpoints were completed in May 2026. All six files use
-a score threshold of 0.35 and none records the checkpoint filename or SHA-256.
-They are therefore retained for provenance and visual comparison only; they
-must not be described as outputs of `checkpoints/best_model.pt`.
+The six NPZ files listed in `application_lines.csv` are the frozen application
+outputs used in the manuscript. Their identities are fixed by filename, file
+size, modification time, and SHA-256 checksum. The manifest records the input
+channels, normalization, threshold, invalid-data suppression, geological
+time-window gating, component filtering, and post-processing parameters for
+each profile.
 
-Four profiles use the main post-processing configuration. HH06-03 and HH06-45
-instead disable time-window gating and component filtering. HH06-08 and HH06-40
-have empty post-processed masks. These differences are recorded in
-`application_lines.csv`.
+All six files use a score threshold of 0.35. Four profiles use the common
+post-processing configuration, while HH06-03 and HH06-45 use the documented
+profile-specific setting without time-window gating or component filtering.
+HH06-08 and HH06-40 contain no pixels after final post-processing. These are
+the final recorded outcomes for those profiles rather than missing products.
 
-Large NPZ files are intentionally ignored by Git. A public paper release should
-store final application predictions in the DOI-bearing data archive and retain
-only their manifest, checksums, download instructions, and reproduction scripts
-in Git.
+Large NPZ files are intentionally excluded from ordinary Git history. The
+`v1.0-submission` release distributes the final application predictions as
+individual assets together with this manifest and the checksum file. Original
+application-profile inputs are outside the minimum public release; their
+availability boundary is explained in `DATA_AVAILABILITY.md`.
 
-## Required final regeneration
-
-Before publication, rerun all six profiles with:
-
-- `checkpoints/best_model.pt`;
-- the single frozen publication inference configuration;
-- a checkpoint SHA-256 embedded in every output file;
-- identical threshold and post-processing settings unless a documented
-  profile-specific geological rule is scientifically justified.
-
-The regenerated archive should also include the processed input profiles, or a
-clear data-access statement if redistribution is restricted.
+The application outputs support inspection of the manuscript interpretation.
+They are not included in the seven-line quantitative test set and should not be
+combined with `geological_usability_metrics_test7.csv`.

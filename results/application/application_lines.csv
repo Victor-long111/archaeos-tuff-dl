@@ -1,7 +1,7 @@
 line_id,filename,height,width,size_bytes,file_mtime,threshold,input_keys,norm_mode,suppress_invalid,time_window_gate,post_min_area,post_min_trace_span,post_min_time_span,pp_close,pp_close_y,pp_close_x,pred_pixels,pred_post_pixels,checkpoint_provenance,status
-HH06-03,HH06-03_reproc_Jonas_Amplitudes_pred.npz,2000,4703,114924962,2026-04-16T16:06:22,0.35,raw;env;rms,raw,1,0,0,0,0,0,3,11,44966,44966,unknown,legacy_pre_final_model
-HH06-08,HH06-08_reproc_Jonas_Amplitudes_pred.npz,2000,1331,35489094,2026-04-15T21:52:54,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,0,0,unknown,legacy_pre_final_model
-HH06-40,HH06-40_reproc_Jonas_Amplitudes_pred.npz,1900,1268,30455027,2026-04-15T21:59:03,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,4,0,unknown,legacy_pre_final_model
-HH06-41,HH06-41_reproc_Jonas_Amplitudes_pred.npz,1900,786,404446,2026-04-15T21:59:20,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,8298,8231,unknown,legacy_pre_final_model
-HH06-45,HH06-45_reproc_Jonas_Amplitudes_pred.npz,1900,4380,105902338,2026-04-16T16:08:44,0.35,raw;env;rms,raw,1,0,0,0,0,0,3,11,102469,102469,unknown,legacy_pre_final_model
-MSM135-P1312,MSM135_Profile_1312_multipleBottommute_pred.npz,3985,10732,14182467,2026-03-23T20:19:35,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,319602,323404,unknown,legacy_pre_final_model
+HH06-03,HH06-03_reproc_Jonas_Amplitudes_pred.npz,2000,4703,114924962,2026-04-16T16:06:22,0.35,raw;env;rms,raw,1,0,0,0,0,0,3,11,44966,44966,final_publication_output,final_publication_result
+HH06-08,HH06-08_reproc_Jonas_Amplitudes_pred.npz,2000,1331,35489094,2026-04-15T21:52:54,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,0,0,final_publication_output,final_publication_result
+HH06-40,HH06-40_reproc_Jonas_Amplitudes_pred.npz,1900,1268,30455027,2026-04-15T21:59:03,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,4,0,final_publication_output,final_publication_result
+HH06-41,HH06-41_reproc_Jonas_Amplitudes_pred.npz,1900,786,404446,2026-04-15T21:59:20,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,8298,8231,final_publication_output,final_publication_result
+HH06-45,HH06-45_reproc_Jonas_Amplitudes_pred.npz,1900,4380,105902338,2026-04-16T16:08:44,0.35,raw;env;rms,raw,1,0,0,0,0,0,3,11,102469,102469,final_publication_output,final_publication_result
+MSM135-P1312,MSM135_Profile_1312_multipleBottommute_pred.npz,3985,10732,14182467,2026-03-23T20:19:35,0.35,raw;env;rms,raw,1,1,160,70,6,1,9,3,319602,323404,final_publication_output,final_publication_result

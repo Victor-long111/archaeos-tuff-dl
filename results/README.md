@@ -8,6 +8,7 @@ Use `scripts/evaluate_full_lines.py` to calculate the same metric definitions
 for compatible reference and prediction NPZ files.
 
 `application/` contains the inventory and checksums for six application-line
-prediction products. The currently archived NPZ files predate the final
-140-epoch model and are explicitly classified as legacy provenance artifacts;
-see `application/README.md` before using them.
+prediction products used in the manuscript. These are the frozen final
+publication outputs; their per-profile inference and post-processing settings
+are recorded in `application/application_lines.csv`. See
+`application/README.md` for interpretation and distribution details.

@@ -28,7 +28,13 @@ repacked files must receive new SHA-256 values and a new manifest version.
 
 ## Reproduction status
 
-The input data and reference masks are complete. Final predictions and Table 4
-must still be regenerated with the selected publication checkpoint and one
-frozen inference configuration. Existing February-March predictions predate the
-final 140-epoch checkpoints and must not be mixed with the final release.
+The input data, reference masks, stored predictions, and Table 4 metrics form
+the final publication test set. The files listed in the release manifests are
+the frozen products used for the manuscript results. Their filenames, sizes,
+and SHA-256 values provide the version boundary for independent verification.
+
+Users can either inspect the stored predictions and recalculate the reported
+metrics, or rerun inference with the publication checkpoint and configuration
+distributed in the `v1.0-submission` release. Reproduced values should be
+compared with `results/geological_usability_metrics_test7.csv` using the metric
+definitions in `code/full_line_metrics.py`.
