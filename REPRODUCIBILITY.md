@@ -52,6 +52,7 @@ Keep test inputs and stored predictions in separate directories, for example:
 release_assets/
 ├── best_model.pt
 ├── final_inference.yaml
+├── final_profile_overrides.yaml
 ├── test_inputs/
 │   └── seven processed test NPZ files
 ├── stored_test_predictions/
@@ -77,18 +78,34 @@ Get-FileHash -Algorithm SHA256 best_model.pt
 
 ## 4. Run full-line inference
 
-The wrapper loads the fixed settings from `configs/final_inference.yaml`:
+The common publication settings use full-line threshold 0.35 and are recorded
+in `configs/final_inference.yaml`. Run the six common test profiles with:
 
 ```bash
 python scripts/run_paper_inference.py \
   --line-dir release_assets/test_inputs \
   --checkpoint release_assets/best_model.pt \
-  --output-dir outputs/paper_inference
+  --output-dir outputs/paper_inference \
+  --profile common \
+  --lines HH06-10 HH06-14 HH06-15 HH06-22 MSM135-P1004 MSM135-P1018
 ```
 
-When `--line-dir` is used without explicit line tokens, every NPZ below that
-directory is processed recursively. Put only model-input NPZ files in the input
-directory.
+Run the frozen HH06-17 profile-specific configuration with:
+
+```bash
+python scripts/run_paper_inference.py \
+  --line-dir release_assets/test_inputs \
+  --checkpoint release_assets/best_model.pt \
+  --output-dir outputs/paper_inference \
+  --profile hh06-17 \
+  --lines HH06-17
+```
+
+The corresponding HH06-03/HH06-45 application mode is selected with
+`--profile hh06-03-45`. The complete mapping is archived in
+`configs/final_profile_overrides.yaml`. When `--lines` is omitted, every NPZ
+below `--line-dir` is processed recursively, so a mixed directory should use
+the explicit profile groups above.
 
 Expected outputs include segmentation scores, thresholded masks,
 post-processed masks, stored parameters, and visual quality-control PNG files.

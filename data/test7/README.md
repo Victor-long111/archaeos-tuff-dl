@@ -38,3 +38,8 @@ metrics, or rerun inference with the publication checkpoint and configuration
 distributed in the `v1.0-submission` release. Reproduced values should be
 compared with `results/geological_usability_metrics_test7.csv` using the metric
 definitions in `code/full_line_metrics.py`.
+
+Six test profiles use the common configuration in `final_inference.yaml`.
+HH06-17 uses the frozen `hh06-17` override recorded in
+`configs/final_profile_overrides.yaml`. All seven stored predictions use the
+full-line score threshold 0.35.

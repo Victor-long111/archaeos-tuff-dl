@@ -48,11 +48,15 @@ probabilities of geological correctness.
 
 ## Important options
 
-The paper configuration uses `256 x 256` windows, stride 128, threshold 0.5,
-group normalization, attention gates, deep supervision, and auxiliary heads.
-The inference implementation also exposes candidate-component size, trace-span,
-morphological closing, invalid-data suppression, and geological time-window
-options. Run either entry point with `--help` to view all command-line options.
+The paper configuration uses `256 x 256` windows, stride 128, a full-line
+threshold of 0.35, group normalization, attention gates, deep supervision, and
+auxiliary heads. The 0.5 value in `configs/final_training.yaml` is used for
+patch-level validation. The inference implementation also exposes
+candidate-component size, trace-span, morphological closing, invalid-data
+suppression, and geological time-window options. Profile-specific final
+settings for HH06-17 and HH06-03/HH06-45 are recorded in
+`configs/final_profile_overrides.yaml` and selected through the wrapper's
+`--profile` option. Run either entry point with `--help` to view all options.
 
 ## Expected behavior
 

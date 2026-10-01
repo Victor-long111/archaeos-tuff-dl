@@ -1,7 +1,7 @@
 input_keys: [raw, env, rms]
 patch: 256
 stride: 128
-threshold: 0.5
+threshold: 0.35
 model:
   base: 32
   norm: gn

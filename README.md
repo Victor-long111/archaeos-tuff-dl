@@ -96,8 +96,16 @@ python scripts/run_paper_inference.py \
 ```
 
 The wrapper uses the paper inference settings: `256 x 256` windows, stride 128,
-Hann-weighted merging, score threshold 0.5, fixed candidate filtering, invalid
-data suppression, and geological time-window gating.
+Hann-weighted merging, full-line score threshold 0.35, fixed candidate
+filtering, invalid data suppression, and geological time-window gating. The
+0.5 value in the training configuration is the patch-level validation
+threshold, not the archived full-line inference threshold.
+
+Most profiles use the common settings above. The final HH06-17 test result and
+the HH06-03/HH06-45 application results use the documented profile-specific
+overrides in `configs/final_profile_overrides.yaml`. Select them with
+`--profile hh06-17` or `--profile hh06-03-45`, respectively; use `--lines` to
+limit a run to the named profiles.
 
 ## Full-line evaluation
 

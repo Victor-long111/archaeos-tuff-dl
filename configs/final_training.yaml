@@ -46,7 +46,7 @@ loss:
   sdf_on_empty: false
 
 metrics:
-  threshold: 0.5
+  threshold: 0.5  # Patch-level validation; full-line publication inference uses 0.35.
 
 sampler:
   balanced_batch: false

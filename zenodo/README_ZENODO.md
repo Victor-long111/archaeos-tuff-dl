@@ -20,7 +20,8 @@ The release contains:
 
 - `best_model.pt`, the primary trained checkpoint supplied for inference;
 - `best_model.sha256`, the checkpoint checksum supplied with the software;
-- `final_inference.yaml`, the frozen inference configuration;
+- `final_inference.yaml`, the frozen common inference configuration;
+- `final_profile_overrides.yaml`, the frozen HH06-17 and HH06-03/45 overrides;
 - seven processed independent test profiles with reference masks;
 - seven stored prediction products for those test profiles;
 - `geological_usability_metrics_test7.csv`, the per-profile metrics reported
@@ -88,7 +89,9 @@ for comparison with reproduced results.
 3. Install the public code release using its `requirements.txt` or
    `environment.yml`.
 4. Place the seven test-input NPZ files in one input directory and use
-   `best_model.pt` together with `final_inference.yaml` for inference.
+   `best_model.pt` together with `final_inference.yaml`. Apply the HH06-17
+   override recorded in `final_profile_overrides.yaml` when reproducing that
+   profile. The repository wrapper exposes this as `--profile hh06-17`.
 5. Evaluate the generated masks with the repository's full-line evaluation
    script and compare the output with
    `geological_usability_metrics_test7.csv`.

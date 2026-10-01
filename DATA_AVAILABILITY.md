@@ -7,18 +7,18 @@ inference configurations, a synthetic seismic example, tests, documentation,
 machine-readable reported metrics, and manifests for the independent test and
 application profiles.
 
-The following larger files are intentionally excluded from ordinary Git
+The following large binary files are intentionally excluded from ordinary Git
 history and must be attached to the public `v1.0-submission` GitHub Release
 before the manuscript is submitted:
 
-- `best_model.pt` and its SHA-256 checksum;
+- `best_model.pt`;
 - seven processed independent test-profile NPZ files;
 - seven stored test-prediction NPZ files;
-- six stored application-prediction NPZ files;
-- `geological_usability_metrics_test7.csv`;
-- `test_lines.csv` and `application_lines.csv`;
-- `final_inference.yaml`; and
-- the release manifests under `zenodo/`.
+- six stored application-prediction NPZ files.
+
+Their checksums, fixed configurations, machine-readable metrics, profile
+inventories, and release manifests are tracked directly in Git and are also
+included alongside the binary assets for convenient verification.
 
 `zenodo/FILES.csv` gives the expected filenames, sizes, categories, and SHA-256
 values. `zenodo/CHECKSUMS.sha256` is the integrity manifest for the submission

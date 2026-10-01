@@ -23,6 +23,7 @@ REQUIRED_FILES = [
     "environment.yml",
     "configs/final_training.yaml",
     "configs/final_inference.yaml",
+    "configs/final_profile_overrides.yaml",
     "code/model.py",
     "code/train.py",
     "code/inference.py",
