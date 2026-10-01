@@ -5,9 +5,10 @@ experiment:
 
 data:
   patch_root: data/patches
+  # Generate these lists from the complete corpus with
+  # preprocessing/make_paper_splits.py. The public patch subset is illustrative.
   train_list: data/splits/train.txt
   val_list: data/splits/val.txt
-  test_list: data/splits/test.txt
   input_keys: [raw, env, rms]
   batch: 64
   num_workers: 8

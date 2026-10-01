@@ -1,0 +1,34 @@
+{
+  "seed": 42,
+  "val_ratio": 0.2,
+  "source_layout": {
+    "positive": "<patch_root>/positive",
+    "negative": "<patch_root>/negative"
+  },
+  "test_lines": [
+    "HH06_10",
+    "HH06_14",
+    "HH06_15",
+    "HH06_17",
+    "HH06_22",
+    "MSM135_P1004",
+    "MSM135_P1018"
+  ],
+  "missing_test_lines": [],
+  "split_policy": "PATCH_LEVEL_TRAINVAL_ON_NONTEST__FULL_LINE_TEST_HOLDOUT",
+  "test_evaluation_unit": "seven complete processed seismic profiles",
+  "counts": {
+    "pos_files_total": 9007,
+    "neg_files_total": 16930,
+    "bad_pos_unparsed": 0,
+    "bad_neg_unparsed": 0,
+    "nontest_pos_total": 7998,
+    "nontest_neg_total": 14787,
+    "train_pos": 6398,
+    "train_neg": 11830,
+    "val_pos": 1600,
+    "val_neg": 2957,
+    "test_pos": 1009,
+    "test_neg": 2143
+  }
+}

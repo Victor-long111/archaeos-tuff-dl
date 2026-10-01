@@ -32,3 +32,9 @@ patches from source profiles that do not overlap the independent test or
 application profiles. See `patches/README_PATCHES.md` and
 `patches/patch_manifest.csv`. This subset documents the training-array format;
 it is not the complete training/validation corpus.
+
+The archived line-disjoint split policy, aggregate counts, and the seven
+held-out test-line identifiers are recorded under `splits/`. The corresponding
+script recreates the documented policy when the complete private patch corpus is
+available; the generated file lists are not distributed as pointers to absent
+private files.

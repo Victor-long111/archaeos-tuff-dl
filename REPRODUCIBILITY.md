@@ -43,7 +43,25 @@ Expected behaviour:
 The synthetic demo uses randomly initialized weights and verifies software
 execution only. It does not reproduce geological performance.
 
-## 3. Obtain submission-release assets
+## 3. Recreate the paper split when the complete patch corpus is available
+
+```bash
+python preprocessing/make_paper_splits.py \
+  --pos-root path/to/patches/positive \
+  --neg-root path/to/patches/negative \
+  --outdir outputs/paper_splits \
+  --verify-summary data/splits/split_summary.json
+```
+
+This operation removes every patch from the seven independent test profiles
+before stratified training-validation splitting and verifies all archived
+aggregate class counts. The original file-level membership list is not part of
+the release, so this reproduces the documented policy rather than claiming
+bit-for-bit recovery of that historical list. The public representative patch
+subset is too small to recreate the full split and is provided only for format
+inspection.
+
+## 4. Obtain submission-release assets
 
 Download the assets attached to the public `v1.0-submission` GitHub Release.
 Keep test inputs and stored predictions in separate directories, for example:
@@ -76,7 +94,7 @@ On Windows PowerShell, calculate an individual checksum with:
 Get-FileHash -Algorithm SHA256 best_model.pt
 ```
 
-## 4. Run full-line inference
+## 5. Run full-line inference
 
 The common publication settings use full-line threshold 0.35 and are recorded
 in `configs/final_inference.yaml`. Run the six common test profiles with:
@@ -110,7 +128,7 @@ the explicit profile groups above.
 Expected outputs include segmentation scores, thresholded masks,
 post-processed masks, stored parameters, and visual quality-control PNG files.
 
-## 5. Recalculate full-line metrics
+## 6. Recalculate full-line metrics
 
 ```bash
 python scripts/evaluate_full_lines.py \
@@ -124,7 +142,7 @@ Compare the generated table with
 implemented in `code/full_line_metrics.py` and described in
 `docs/USER_GUIDE.md`.
 
-## 6. Audit the public GitHub release
+## 7. Audit the public GitHub release
 
 After committing all files, configuring the public `origin`, and creating the
 submission tag, run:

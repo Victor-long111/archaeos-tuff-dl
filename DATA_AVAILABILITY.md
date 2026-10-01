@@ -23,6 +23,11 @@ Their checksums, fixed configurations, machine-readable metrics, profile
 inventories, and release manifests are tracked directly in Git and are also
 included alongside the binary assets for convenient verification.
 
+The repository additionally records the sanitized aggregate split summary,
+the seven held-out source-line identifiers, and the deterministic split script.
+The full training and validation patch lists are not published as unusable
+pointers because the complete private patch corpus is outside the release.
+
 `zenodo/FILES.csv` gives the expected filenames, sizes, categories, and SHA-256
 values. `zenodo/CHECKSUMS.sha256` is the integrity manifest for the submission
 assets. The release must remain publicly downloadable throughout peer review.

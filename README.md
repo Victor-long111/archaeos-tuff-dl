@@ -81,6 +81,13 @@ The public configuration records the paper architecture and main training
 parameters, including 140 epochs, batch size 64, AdamW learning rate `1e-4`,
 weight decay `1e-4`, and random seed 42.
 
+The paper split is line-disjoint: patches from all seven independent test
+profiles are removed before a stratified 80/20 training-validation split is
+made with seed 42. The sanitized archived counts are in
+`data/splits/split_summary.json`, and the documented split policy can be recreated with
+`preprocessing/make_paper_splits.py` when the complete patch corpus is
+available.
+
 ## Full-line inference
 
 Input NPZ files must contain co-registered 2-D arrays named `raw`, `env`, and

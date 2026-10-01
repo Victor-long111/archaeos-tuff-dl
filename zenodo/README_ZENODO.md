@@ -27,8 +27,10 @@ The release contains:
 - `geological_usability_metrics_test7.csv`, the per-profile metrics reported
   for the seven-profile test set;
 - `test_lines.csv`, the test-profile inventory;
-- six stored prediction products for manuscript application profiles; and
+- six stored prediction products for manuscript application profiles;
 - `application_lines.csv`, the application-product inventory;
+- `split_summary.json` and `heldout_test_lines.txt`, the sanitized aggregate
+  split record and seven line-disjoint evaluation identifiers;
 - 231 representative 256 x 256 training patches (144 positive and 87
   negative) selected from non-test and non-application source profiles; and
 - `README_PATCHES.md`, `patch_manifest.csv`, and
@@ -45,6 +47,11 @@ corpus and no train/validation split is assigned to it. Its source-line filter
 excludes every independent test and manuscript application profile; the exact
 selection rule and per-file provenance are recorded in `README_PATCHES.md` and
 `patch_manifest.csv`.
+
+The source repository also supplies `preprocessing/make_paper_splits.py` to
+regenerate the documented splitting policy from the complete patch corpus and
+to verify the aggregate counts. The original file-level training/validation
+membership list is not included in this release.
 
 ## Test-input format
 

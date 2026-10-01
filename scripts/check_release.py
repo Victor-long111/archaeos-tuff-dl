@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import subprocess
 from pathlib import Path
 
@@ -36,7 +37,13 @@ REQUIRED_FILES = [
     "data/patches/README_PATCHES.md",
     "data/patches/patch_manifest.csv",
     "data/patches/CHECKSUMS_PATCHES.sha256",
+    "data/splits/README.md",
+    "data/splits/split_summary.json",
+    "data/splits/heldout_test_lines.txt",
+    "preprocessing/make_paper_splits.py",
     "results/geological_usability_metrics_test7.csv",
+    "results/model_selection_metrics.csv",
+    "results/input_representation_selection_metrics.csv",
     "zenodo/README_ZENODO.md",
     "zenodo/FILES.csv",
     "zenodo/CHECKSUMS.sha256",
@@ -133,6 +140,65 @@ def check_synthetic_example(failures: list[str]) -> None:
         failures.append(f"Unable to read the synthetic example: {exc}")
 
 
+def check_split_summary(failures: list[str]) -> None:
+    summary_path = ROOT / "data" / "splits" / "split_summary.json"
+    lines_path = ROOT / "data" / "splits" / "heldout_test_lines.txt"
+    if not summary_path.is_file() or not lines_path.is_file():
+        return
+
+    try:
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        counts = summary["counts"]
+        heldout_lines = [
+            line.strip()
+            for line in lines_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+    except Exception as exc:
+        failures.append(f"Unable to read split metadata: {exc}")
+        return
+
+    if summary.get("seed") != 42 or summary.get("val_ratio") != 0.2:
+        failures.append("Split metadata must record seed 42 and val_ratio 0.2.")
+    if summary.get("missing_test_lines"):
+        failures.append("Split metadata reports missing held-out test lines.")
+    if sorted(heldout_lines) != sorted(summary.get("test_lines", [])):
+        failures.append("heldout_test_lines.txt differs from split_summary.json.")
+
+    equations = {
+        "positive total": (
+            counts.get("nontest_pos_total", -1) + counts.get("test_pos", -1),
+            counts.get("pos_files_total"),
+        ),
+        "negative total": (
+            counts.get("nontest_neg_total", -1) + counts.get("test_neg", -1),
+            counts.get("neg_files_total"),
+        ),
+        "positive development": (
+            counts.get("train_pos", -1) + counts.get("val_pos", -1),
+            counts.get("nontest_pos_total"),
+        ),
+        "negative development": (
+            counts.get("train_neg", -1) + counts.get("val_neg", -1),
+            counts.get("nontest_neg_total"),
+        ),
+    }
+    failures_before = len(failures)
+    for label, (calculated, recorded) in equations.items():
+        if calculated != recorded:
+            failures.append(
+                f"Split-count arithmetic failed for {label}: "
+                f"calculated={calculated}, recorded={recorded}."
+            )
+    if len(failures) == failures_before:
+        print(
+            "SPLIT_SUMMARY "
+            f"train={counts['train_pos'] + counts['train_neg']} "
+            f"val={counts['val_pos'] + counts['val_neg']} "
+            f"heldout_source_patches={counts['test_pos'] + counts['test_neg']}"
+        )
+
+
 def check_documentation(failures: list[str], warnings: list[str]) -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     required_terms = [
@@ -173,6 +239,7 @@ def main() -> int:
 
     check_checkpoint(failures, warnings)
     check_synthetic_example(failures)
+    check_split_summary(failures)
     if (ROOT / "README.md").is_file() and (ROOT / "CITATION.cff").is_file():
         check_documentation(failures, warnings)
     if not args.content_only:
