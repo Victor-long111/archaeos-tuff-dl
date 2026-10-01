@@ -14,7 +14,10 @@ before the manuscript is submitted:
 - `best_model.pt`;
 - seven processed independent test-profile NPZ files;
 - seven stored test-prediction NPZ files;
-- six stored application-prediction NPZ files.
+- six stored application-prediction NPZ files; and
+- 231 representative processed training patches (144 positive and 87
+  negative) drawn only from source profiles outside the independent test and
+  application sets.
 
 Their checksums, fixed configurations, machine-readable metrics, profile
 inventories, and release manifests are tracked directly in Git and are also
@@ -23,6 +26,13 @@ included alongside the binary assets for convenient verification.
 `zenodo/FILES.csv` gives the expected filenames, sizes, categories, and SHA-256
 values. `zenodo/CHECKSUMS.sha256` is the integrity manifest for the submission
 assets. The release must remain publicly downloadable throughout peer review.
+
+The representative patches are supplied to document the model input and label
+format and to provide inspectable training examples. They are not the complete
+training/validation corpus and do not carry an assigned train/validation split.
+Their deterministic source-line exclusion rule and file-level metadata are
+documented in `data/patches/README_PATCHES.md` and
+`data/patches/patch_manifest.csv`.
 
 ## Original seismic data
 

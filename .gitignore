@@ -14,6 +14,7 @@ results/application/legacy_predictions/*.npz
 *.onnx
 data/private/
 data/test7/processed_inputs/*.npz
+data/patches/files/*.npz
 *.segy
 *.sgy
 *.tif

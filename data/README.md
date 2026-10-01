@@ -26,3 +26,9 @@ The seven processed independent test profiles are documented under `test7/`.
 They contain model-ready arrays and reference masks, not the original SEG-Y
 files. Large NPZ files are intended for a DOI-bearing data archive rather than
 ordinary Git history.
+
+The submission Release also supplies 231 representative 256 x 256 training
+patches from source profiles that do not overlap the independent test or
+application profiles. See `patches/README_PATCHES.md` and
+`patches/patch_manifest.csv`. This subset documents the training-array format;
+it is not the complete training/validation corpus.

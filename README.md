@@ -123,7 +123,9 @@ python scripts/evaluate_full_lines.py \
 
 The public `v1.0-submission` GitHub Release must provide the trained checkpoint,
 seven processed test inputs, their stored predictions, and the release
-manifests. Follow `REPRODUCIBILITY.md` to verify hashes, rerun full-line
+manifests. It also provides 231 representative training patches selected from
+source profiles that do not overlap the independent test or application
+profiles. Follow `REPRODUCIBILITY.md` to verify hashes, rerun full-line
 inference, and recalculate the machine-readable metrics in
 `results/geological_usability_metrics_test7.csv`.
 
@@ -143,9 +145,12 @@ checkpoints/      Instructions for pretrained model weights
 
 ## Data and pretrained weights
 
-Large processed profiles, stored predictions, and `best_model.pt` are excluded
-from ordinary Git history. During submission and peer review they must be
-publicly downloadable as assets of the `v1.0-submission` GitHub Release. After
+Large processed profiles, stored predictions, representative training patches,
+and `best_model.pt` are excluded from ordinary Git history. During submission
+and peer review they must be publicly downloadable as assets of the
+`v1.0-submission` GitHub Release. The 231 released patches are training-format
+examples, not the complete training/validation corpus; their selection and
+leakage-control rules are documented in `data/patches/README_PATCHES.md`. After
 acceptance, the immutable accepted release will additionally be archived in
 Zenodo and assigned a version-specific DOI. The GitHub repository will remain
 public.

@@ -28,16 +28,23 @@ The release contains:
   for the seven-profile test set;
 - `test_lines.csv`, the test-profile inventory;
 - six stored prediction products for manuscript application profiles; and
-- `application_lines.csv`, the application-product inventory.
+- `application_lines.csv`, the application-product inventory;
+- 231 representative 256 x 256 training patches (144 positive and 87
+  negative) selected from non-test and non-application source profiles; and
+- `README_PATCHES.md`, `patch_manifest.csv`, and
+  `CHECKSUMS_PATCHES.sha256`, documenting and verifying that subset.
 
 `FILES.csv` describes every payload file. `CHECKSUMS.sha256` provides SHA-256
 checksums for integrity verification. The four release-metadata files are kept
 under `zenodo/` in the source repository but should be uploaded alongside the
 payload files in the Zenodo record.
 
-The `Positive/` and `Negative/` patch collections are not required for this
-minimum release and are intentionally excluded. They may be deposited in a
-later, versioned training-example release.
+The patch subset documents the processed training format and provides
+inspectable labelled examples. It is not the complete training/validation
+corpus and no train/validation split is assigned to it. Its source-line filter
+excludes every independent test and manuscript application profile; the exact
+selection rule and per-file provenance are recorded in `README_PATCHES.md` and
+`patch_manifest.csv`.
 
 ## Test-input format
 
@@ -106,6 +113,11 @@ redistribution conditions. The released test inputs are processed,
 model-ready NPZ products rather than original acquisition files. Reference
 masks, predictions, metrics, and manifests are included to permit evaluation
 of the published workflow.
+
+The representative patch subset is included as supplementary training-format
+material. Because it is not the complete training/validation corpus, it supports
+inspection and software exercises but does not independently reproduce model
+fitting from the original full training set.
 
 The six application prediction products are included, but their original
 seismic inputs are not part of this minimum record. Regional geological
