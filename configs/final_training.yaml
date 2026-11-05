@@ -1,7 +1,7 @@
 experiment:
-  name: archaeos_tuff_recovered_M07
+  name: archaeos_tuff
   seed: 42
-  outdir: outputs/archaeos_tuff_recovered_M07
+  outdir: outputs
 
 data:
   patch_root: data/patches
