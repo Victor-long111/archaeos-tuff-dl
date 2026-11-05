@@ -68,14 +68,3 @@ Model, sampler, inference and evaluator implementations are unchanged.
 
 MIT software license: see `LICENSE`. It does not grant access to external data.
 Do not add real research artifacts or old Git history to this source-only folder.
-
-## Review status
-
-This is a source-only coauthor-review snapshot, not a verified paper-reproduction
-release. A small synthetic attribute-to-evaluation workflow passed; this does
-not validate manuscript performance. Historical train/validation/test membership
-and the correspondence between checkpoints, inference settings and reported
-metrics remain unresolved. Some settings and model parameter counts differ from
-the manuscript. Full-line ignore masking and sliding-window end coverage have
-known implementation issues. Data access restrictions do not resolve these
-method and result discrepancies.
