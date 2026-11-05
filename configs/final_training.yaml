@@ -1,18 +1,17 @@
 experiment:
-  name: archaeos_tuff_final
+  name: archaeos_tuff_recovered_M07
   seed: 42
-  outdir: outputs/archaeos_tuff_final
+  outdir: outputs/archaeos_tuff_recovered_M07
 
 data:
   patch_root: data/patches
-  # Generate these lists from the complete corpus with
-  # preprocessing/make_paper_splits.py. The public patch subset is illustrative.
+  val_root: data/patches
+  # Supply authorized external paths and exact historical membership lists.
   train_list: data/splits/train.txt
   val_list: data/splits/val.txt
   input_keys: [raw, env, rms]
   batch: 64
   num_workers: 8
-  pin_memory: true
 
 model:
   base: 32
@@ -43,11 +42,11 @@ loss:
   sdf_delta: 0.2
   boundary_radius: 1
   sdf_clip: 20.0
-  sdf_band: 0.25
+  sdf_band: 0.20
   sdf_on_empty: false
 
 metrics:
-  threshold: 0.5  # Patch-level validation; full-line publication inference uses 0.35.
+  threshold: 0.5  # Patch validation; full-line settings remain in the inference wrapper.
 
 sampler:
   balanced_batch: false

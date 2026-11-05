@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""Recreate the archived line-disjoint patch-splitting policy.
+"""Generate the documented line-holdout and patch-level split policy.
 
 The complete patch corpus is arranged in separate ``positive`` and ``negative``
-directories. Patches from the seven independent test profiles are excluded
+directories. Patches from the requested evaluation profiles are excluded
 before the remaining positive and negative pools are split independently into
-training and validation subsets. The script verifies the archived aggregate
-counts; the original file-level membership list is not distributed. The
-independent evaluation itself uses the seven complete processed profiles, not
-the held-out patch files.
+training and validation subsets. 
 """
 
 from __future__ import annotations

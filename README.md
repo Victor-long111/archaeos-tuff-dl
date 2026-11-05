@@ -1,178 +1,81 @@
 # Archaeos Tuff DL
 
-Official code accompanying the manuscript **"Boundary-aware multitask
-segmentation for sparse-label seismic interpretation: Full-line evaluation and
-regional reconstruction of the Archaeos Tuff"**.
+Attention residual U-Net for ML-assisted seismic interpretation, with deep
+supervision and auxiliary edge/signed-distance heads.
 
-## Overview
+## Setup
 
-This repository provides a boundary-aware multitask workflow for identifying
-the Archaeos Tuff in heterogeneous 2-D marine seismic profiles. The selected
-model is a residual U-Net with attention-gated skip connections, deep
-supervision, and auxiliary edge and signed-distance heads. The paper model uses
-three co-registered inputs: raw amplitude, envelope amplitude, and RMS
-amplitude.
-
-The code covers seismic-attribute preparation, patch extraction, model training,
-sliding-window full-line inference, geological time-window filtering, and the
-complete-profile evaluation metrics used in the manuscript.
-
-For submission-release validation, see `REPRODUCIBILITY.md`. Data access,
-restrictions, and the GitHub-to-Zenodo archival plan are described in
-`DATA_AVAILABILITY.md`.
-
-## Installation
-
-Python 3.10 or 3.11 is recommended.
+Python 3.11 recommended; a GPU is recommended for substantial training.
 
 ```bash
-python -m venv .venv
-.venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
+python code/run_train.py --config configs/final_training.yaml --dry-run
 ```
 
-Alternatively:
+## Workflow
+
+Inputs are processed NPZ files containing co-registered `raw`, `env` and `rms`
+arrays of shape `(time_samples, traces)`. Training/evaluation additionally
+requires aligned reference masks; class 1 is foreground and 255 is ignored.
+Real data, test profiles, labels, patches, trained weights and stored predictions
+are **not included**. Supply authorized external materials and use new output paths.
+
+### Attribute calculation and patch extraction
 
 ```bash
-conda env create -f environment.yml
-conda activate archaeos-tuff-dl
+python preprocessing/Cal_attribu_NPZ.py --input-dir /path/to/line_npz --output-dir /path/to/attributed_npz
+python preprocessing/Crop_Pos_patches.py --input-dir /path/to/attributed_npz --output-dir /path/to/new_patches
+python preprocessing/Crop_Neg_patches.py --line-dir /path/to/attributed_npz --positive-dir /path/to/new_patches/positive --output-dir /path/to/new_patches
 ```
 
-## Computational requirements
+These are restored historical source scripts. The attribute script calculates
+Env/Rms/IFreq/Coh and phase channels; it does not implement Swe/Var/AveEn.
+Its Coh smoothing defaults also need reconciliation with Supplementary Table S1.
+Prepare the authorized development-line inputs before cropping: these scripts
+do not enforce test-line exclusion. Use trusted NPZ inputs and fresh output
+directories; object metadata is supported. Existing crop outputs are not deleted,
+and attribute outputs are not overwritten by default. No generated files belong
+in this source-only upload. Only output-safety behavior was changed in these copies.
 
-The lightweight checks and synthetic example were verified on Windows 11 with
-Python 3.13.5, NumPy 2.2.6, PyTorch 2.9.1 with CUDA 12.8, and an NVIDIA GeForce
-RTX 5060 Laptop GPU with 8 GB VRAM. The reproducible environment files target
-Python 3.10 or 3.11 and PyTorch 2.1 or newer.
+### Training and evaluation
 
-- CPU execution is supported for data inspection, metrics, tests, and small
-  model smoke checks.
-- A CUDA-capable GPU is recommended for full-line inference and training.
-- Eight GB of GPU memory is sufficient for batch-one patch inference; training
-  with the paper batch size may require more memory or a smaller batch size.
-- Disk requirements depend on the selected release assets. The minimum model,
-  test-input, stored-prediction, and manifest set is approximately 2.3 GB.
-- Runtime varies with profile size, overlap, device, and post-processing. Users
-  should record their hardware and elapsed time with reproduced results.
-
-## Quick check
+1. Set external input/split/output paths in a working copy of `configs/final_training.yaml`.
+2. Inspect the training command with `--dry-run`, then remove that flag to train.
+3. Supply a compatible checkpoint for inference, then evaluate the actual arrays.
 
 ```bash
-python scripts/create_synthetic_example.py
-python scripts/inspect_npz.py data/example/synthetic_line.npz
-python scripts/run_synthetic_demo.py
-python scripts/smoke_test_model.py
-python -m pytest -q
+python code/run_train.py --config /path/to/training.yaml --dry-run
+python scripts/run_paper_inference.py --line-dir /path/to/profiles --checkpoint /path/to/model.pt --output-dir /path/to/new_predictions --profile common
+python scripts/evaluate_full_lines.py --reference-dir /path/to/references --prediction-dir /path/to/new_predictions --prediction-key pred_bin_pp --sample-interval-ms 1.0 --output /path/to/new_metrics.csv
 ```
 
-The synthetic example verifies installation and array compatibility. It is not
-a substitute for the geological test profiles used in the paper.
+Replace `1.0` with the documented sample interval. Entry points provide `--help`.
+`preprocessing/` retains split-policy utilities; their output does not establish
+the historical training membership. `code/sweep_thr_val.py` retains threshold
+selection on validation data, not test-outcome optimization.
 
-## Training
+## Configuration and result status
 
-Set the dataset paths in `configs/final_training.yaml`, then run:
+Model, sampler, inference and evaluator implementations are unchanged.
+`configs/final_training.yaml` is the single executable training configuration.
 
-```bash
-python code/run_train.py --config configs/final_training.yaml
-```
+## Files and license
 
-The public configuration records the paper architecture and main training
-parameters, including 140 epochs, batch size 64, AdamW learning rate `1e-4`,
-weight decay `1e-4`, and random seed 42.
+- `code/`: model, losses, data loading, augmentation, sampling, training and inference.
+- `configs/`: the model configs
+- `preprocessing/`: attribute calculation, positive/negative patch extraction and split utilities.
+- `scripts/`: full-line inference and evaluation entry points.
 
-The paper split is line-disjoint: patches from all seven independent test
-profiles are removed before a stratified 80/20 training-validation split is
-made with seed 42. The sanitized archived counts are in
-`data/splits/split_summary.json`, and the documented split policy can be recreated with
-`preprocessing/make_paper_splits.py` when the complete patch corpus is
-available.
+MIT software license: see `LICENSE`. It does not grant access to external data.
+Do not add real research artifacts or old Git history to this source-only folder.
 
-## Full-line inference
+## Review status
 
-Input NPZ files must contain co-registered 2-D arrays named `raw`, `env`, and
-`rms`, stored as `(time_samples, traces)`. The publication inference checkpoint
-is `checkpoints/best_model.pt`; `checkpoints/last_model.pt` records the final
-training epoch and is retained for resuming or auditing training. Run:
-
-```bash
-python scripts/run_paper_inference.py \
-  --line-dir path/to/seismic_npz \
-  --checkpoint checkpoints/best_model.pt \
-  --output-dir outputs/paper_inference
-```
-
-The wrapper uses the paper inference settings: `256 x 256` windows, stride 128,
-Hann-weighted merging, full-line score threshold 0.35, fixed candidate
-filtering, invalid data suppression, and geological time-window gating. The
-0.5 value in the training configuration is the patch-level validation
-threshold, not the archived full-line inference threshold.
-
-Most profiles use the common settings above. The final HH06-17 test result and
-the HH06-03/HH06-45 application results use the documented profile-specific
-overrides in `configs/final_profile_overrides.yaml`. Select them with
-`--profile hh06-17` or `--profile hh06-03-45`, respectively; use `--lines` to
-limit a run to the named profiles.
-
-## Full-line evaluation
-
-Reference NPZ files may store the segmentation as `mask`, `gt`, `label`, `y`,
-or `target`. Recompute top/base MAE and RMSE, Coverage, and Connectivity with:
-
-```bash
-python scripts/evaluate_full_lines.py \
-  --reference-dir path/to/reference_npz \
-  --prediction-dir path/to/prediction_npz \
-  --output outputs/full_line_metrics.csv
-```
-
-## Reproducing the reported test results
-
-The public `v1.0-submission` GitHub Release must provide the trained checkpoint,
-seven processed test inputs, their stored predictions, and the release
-manifests. It also provides 231 representative training patches selected from
-source profiles that do not overlap the independent test or application
-profiles. Follow `REPRODUCIBILITY.md` to verify hashes, rerun full-line
-inference, and recalculate the machine-readable metrics in
-`results/geological_usability_metrics_test7.csv`.
-
-## Repository structure
-
-```text
-code/             Model, losses, data loader, training, and inference
-preprocessing/    Attribute calculation, patch extraction, and blind splitting
-configs/          Paper training and inference settings
-scripts/          Example, inference, inspection, and evaluation entry points
-tests/            Lightweight model and metric tests
-docs/             User guide for inputs, outputs, and typical workflows
-data/             Data format and availability notes
-results/          Machine-readable metrics reported in the manuscript
-checkpoints/      Instructions for pretrained model weights
-```
-
-## Data and pretrained weights
-
-Large processed profiles, stored predictions, representative training patches,
-and `best_model.pt` are excluded from ordinary Git history. During submission
-and peer review they must be publicly downloadable as assets of the
-`v1.0-submission` GitHub Release. The 231 released patches are training-format
-examples, not the complete training/validation corpus; their selection and
-leakage-control rules are documented in `data/patches/README_PATCHES.md`. After
-acceptance, the immutable accepted release will additionally be archived in
-Zenodo and assigned a version-specific DOI. The GitHub repository will remain
-public.
-
-See `DATA_AVAILABILITY.md` for the access boundary, `data/README.md` for the NPZ
-schema, and `zenodo/FILES.csv` for the canonical release inventory and hashes.
-
-## License and citation
-
-The source code is released under the MIT License. Dataset licenses are stated
-separately by their data providers. Citation metadata are provided in
-`CITATION.cff`.
-
-## Contact
-
-Zelong Ju  
-Institute of Geophysics, Universität Hamburg  
-zelong.ju@uni-hamburg.de
+This is a source-only coauthor-review snapshot, not a verified paper-reproduction
+release. A small synthetic attribute-to-evaluation workflow passed; this does
+not validate manuscript performance. Historical train/validation/test membership
+and the correspondence between checkpoints, inference settings and reported
+metrics remain unresolved. Some settings and model parameter counts differ from
+the manuscript. Full-line ignore masking and sliding-window end coverage have
+known implementation issues. Data access restrictions do not resolve these
+method and result discrepancies.

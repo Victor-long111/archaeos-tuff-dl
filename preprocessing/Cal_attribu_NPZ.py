@@ -31,7 +31,7 @@ class NPZAttrGenerator:
         axis_tag="Time,Trace",
         keep_raw=True,
         keep_mask=True,
-        overwrite=True,
+        overwrite=False,
 
         # Envelope
         env_log1p=True,
@@ -59,6 +59,8 @@ class NPZAttrGenerator:
         qc_show=2,
         seed=42
     ):
+        if os.path.realpath(npz_dir) == os.path.realpath(output_dir):
+            raise ValueError("Use a separate output directory; input NPZ files must not be replaced.")
         self.npz_dir = npz_dir
         self.output_dir = output_dir
         self.axis_tag = axis_tag
@@ -566,7 +568,7 @@ if __name__ == "__main__":
 
         keep_raw=True,
         keep_mask=True,
-        overwrite=True,
+        overwrite=False,
 
         env_log1p=True,
         rms_win=21,

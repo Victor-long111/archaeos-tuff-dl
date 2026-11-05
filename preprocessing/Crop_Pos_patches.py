@@ -3,7 +3,6 @@ import glob
 import argparse
 import numpy as np
 import random
-import shutil
 from tqdm import tqdm
 
 
@@ -62,8 +61,11 @@ class PureStageBPatchSaver:
         self._reset_dir(self.dir_pos)
 
     def _reset_dir(self, path):
-        if os.path.exists(path):
-            shutil.rmtree(path)
+        # Keep existing research outputs intact; use a fresh output directory.
+        if os.path.lexists(path) and (
+            os.path.islink(path) or not os.path.isdir(path) or os.listdir(path)
+        ):
+            raise FileExistsError(f"Refusing to replace existing output: {path}. Use a new output directory.")
         os.makedirs(path, exist_ok=True)
 
     # ---------------- Load Data (No transpose) ----------------

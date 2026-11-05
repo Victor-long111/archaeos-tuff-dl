@@ -3,7 +3,6 @@ import glob
 import argparse
 import numpy as np
 import random
-import shutil
 from tqdm import tqdm
 
 
@@ -93,9 +92,14 @@ class StratifiedNegAroundPosSampler:
         self._reset_dirs()
 
     def _reset_dirs(self):
-        for p in [self.dir_wat, self.dir_sed, self.dir_dep]:
-            if os.path.exists(p):
-                shutil.rmtree(p)
+        paths = [self.dir_wat, self.dir_sed, self.dir_dep]
+        # Validate all destinations before creating any; never delete old outputs.
+        for p in paths:
+            if os.path.lexists(p) and (
+                os.path.islink(p) or not os.path.isdir(p) or os.listdir(p)
+            ):
+                raise FileExistsError(f"Refusing to replace existing output: {p}. Use a new output directory.")
+        for p in paths:
             os.makedirs(p, exist_ok=True)
 
     # -----------------------------
